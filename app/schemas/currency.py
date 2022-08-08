@@ -4,7 +4,9 @@ from pydantic import BaseModel
 
 
 class Currency(BaseModel):
-    curr: str = ""
+    code: str = ""
+    name: Optional[str] = None
+    number: Optional[int] = None
     country: Optional[str] = None
     flag: Optional[str] = None
     symbol: Optional[str] = None

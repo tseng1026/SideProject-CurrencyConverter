@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+uvicorn = "*"
+pydantic = "*"
+bs4 = "*"
+requests = "*"
+mastercard-oauth1-signer = "*"
+pandas = "*"
+fastapi = "*"
+lxml = "*"
+python-dotenv = "*"
+user-agent = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
