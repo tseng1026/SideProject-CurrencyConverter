@@ -1,0 +1,15 @@
+# Environment
+.env
+.DS_Store
+
+# Cache
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+.pytest_cache/
+
+# Certificate
+*.p12
+*.pem
+*.key
