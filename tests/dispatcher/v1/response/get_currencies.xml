@@ -1,0 +1,16 @@
+<ISO_4217 Pblshd="2022-04-01">
+  <CcyTbl>
+    <CcyNtry>
+      <CtryNm>Country Name 0</CtryNm>
+      <CcyNm>Currency Name 0</CcyNm>
+      <Ccy>CURRENCY-CODE-0</Ccy>
+      <CcyNbr>0</CcyNbr>
+    </CcyNtry>
+    <CcyNtry>
+      <CtryNm>Country Name 1</CtryNm>
+      <CcyNm>Currency Name 1</CcyNm>
+      <Ccy>CURRENCY-CODE-1</Ccy>
+      <CcyNbr>1</CcyNbr>
+    </CcyNtry>
+  </CcyTbl>
+</ISO_4217>
