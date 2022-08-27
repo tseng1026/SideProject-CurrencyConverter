@@ -1,0 +1,10 @@
+{
+    "data": {
+      "conversionRate": 2.0,
+      "transAmt": 1.0,
+      "crdhldBillAmt": 2.0,
+      "fxDate": "1970-01-01",
+      "transCurr": "ALL",
+      "bankFee": 0
+    }
+}

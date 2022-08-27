@@ -14,6 +14,10 @@ fastapi = "*"
 lxml = "*"
 python-dotenv = "*"
 user-agent = "*"
+pytest = "*"
+pytest-mock = "*"
+responses = "*"
+freezegun = "*"
 
 [dev-packages]
 

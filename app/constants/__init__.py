@@ -1,2 +1,2 @@
 from .config import settings
-from .enum import Institution, StatInterval, StatPeriod, StatColumns
+from .enum import Institution, StatColumns, StatInterval, StatPeriod

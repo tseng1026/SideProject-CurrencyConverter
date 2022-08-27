@@ -1,2 +1,2 @@
 from .currency import Currency
-from .exchange_rate import RealTimeExchangeRate, HistoricExchangeRate
+from .exchange_rate import HistoricExchangeRate, RealTimeExchangeRate
