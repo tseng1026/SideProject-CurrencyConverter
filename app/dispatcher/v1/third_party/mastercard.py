@@ -1,19 +1,34 @@
 from datetime import date
 
+import OpenSSL.crypto
 import requests
 from app.constants import settings
 from app.dispatcher.v1.base import ExchangeRateDispatcher
 from app.schemas import Currency, RealTimeExchangeRate
-from oauth1.authenticationutils import load_signing_key
+from app.utils import urljoin
 from oauth1.oauth_ext import OAuth1RSA
 
 
 class MasterCard(ExchangeRateDispatcher):
     PREFIX = settings.MASTERCARD_API_STR
 
-    OPENSSL_KEY = settings.MASTERCARD_OPENSSL_KEY
-    OPENSSL_PASSWORD = settings.MASTERCARD_OPENSSL_PASSWORD
-    SIGNING_KEY = load_signing_key(OPENSSL_KEY, OPENSSL_PASSWORD)
+    # MASTERCARD_OPENSSL_KEY = "P12_FILEPATH"
+    # MASTERCARD_OPENSSL_PASSWORD = "PASSWORD"
+    # MASTERCARD_PKCS12 = OpenSSL.crypto.load_pkcs12(
+    #     open(MASTERCARD_OPENSSL_KEY, "rb").read(),
+    #     MASTERCARD_OPENSSL_PASSWORD,
+    # )
+    # PRIVATE_KEY = MASTERCARD_PKCS12.get_privatekey()
+    # DUMP_KEY = OpenSSL.crypto.dump_privatekey(
+    #     OpenSSL.crypto.FILETYPE_PEM, PRIVATE_KEY,
+    # )
+
+    SIGNING_KEY = OpenSSL.crypto.load_privatekey(
+        OpenSSL.crypto.FILETYPE_PEM,
+        bytes(settings.MASTERCARD_PRIVATE_KEY, encoding="utf-8").decode(
+            "unicode-escape",
+        ),  # noqa: 501
+    )
     CONSUMER_KEY = settings.MASTERCARD_CONSUMER_KEY
 
     def get_realtime_rate(
@@ -28,7 +43,10 @@ class MasterCard(ExchangeRateDispatcher):
             raise Exception("Historic data unsupported.")
 
         res = requests.get(
-            self.PREFIX + "/settlement/currencyrate/conversion-rate",
+            urljoin(
+                self.PREFIX,
+                "settlement/currencyrate/conversion-rate",
+            ),
             auth=OAuth1RSA(self.CONSUMER_KEY, self.SIGNING_KEY),
             params={
                 "fxDate": transaction_date,

@@ -5,6 +5,7 @@ import responses
 from app.constants import StatInterval, StatPeriod
 from app.dispatcher.v1.third_party import yahoo
 from app.schemas import Currency, HistoricExchangeRate, RealTimeExchangeRate
+from app.utils import filejoin, urljoin
 from freezegun import freeze_time
 from tests.fixtures.requests import MockedRequest
 
@@ -26,9 +27,14 @@ class TestMastercardAPI:
             [
                 MockedRequest(
                     method=responses.GET,
-                    api_url=yahoo.PREFIX
-                    + f"/{MOCKED_CURRENCIES[0].code}{MOCKED_CURRENCIES[1].code}=X",  # noqa: E501
-                    content_file=f"{RESPONSE_DIR}/yahoo_get_realtime_rate.txt",
+                    api_url=urljoin(
+                        yahoo.PREFIX,
+                        f"{MOCKED_CURRENCIES[0].code}{MOCKED_CURRENCIES[1].code}=X",  # noqa: 501
+                    ),
+                    content_file=filejoin(
+                        RESPONSE_DIR,
+                        "yahoo_get_realtime_rate.txt",
+                    ),
                     status=HTTPStatus.OK,
                 ),
             ],
@@ -62,9 +68,14 @@ class TestMastercardAPI:
             [
                 MockedRequest(
                     method=responses.GET,
-                    api_url=yahoo.PREFIX
-                    + f"/{MOCKED_CURRENCIES[0].code}{MOCKED_CURRENCIES[1].code}=X",  # noqa: E501
-                    content_file=f"{RESPONSE_DIR}/yahoo_get_historic_rate.txt",
+                    api_url=urljoin(
+                        yahoo.PREFIX,
+                        f"{MOCKED_CURRENCIES[0].code}{MOCKED_CURRENCIES[1].code}=X",  # noqa: 501
+                    ),
+                    content_file=filejoin(
+                        RESPONSE_DIR,
+                        "yahoo_get_historic_rate.txt",
+                    ),
                     status=HTTPStatus.OK,
                 ),
             ],

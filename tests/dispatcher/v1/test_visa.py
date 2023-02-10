@@ -4,6 +4,7 @@ import pytest
 import responses
 from app.dispatcher.v1.third_party import visa
 from app.schemas import Currency, RealTimeExchangeRate
+from app.utils import filejoin, urljoin
 from freezegun import freeze_time
 from tests.fixtures.requests import MockedRequest
 
@@ -11,6 +12,11 @@ RESPONSE_DIR = "tests/dispatcher/v1/response"
 
 
 class TestVisaAPI:
+    MOCK_API_KEY = "mock-api-key"
+    MOCK_SHARED_SECRET = "mock-shared-secret"
+    visa.API_KEY = MOCK_API_KEY
+    visa.SHARED_SECRET = MOCK_SHARED_SECRET
+
     MOCKED_CURRENCIES = [
         Currency(code=f"currency-code-{i}") for i in range(2)
     ]  # noqa: E501
@@ -24,9 +30,14 @@ class TestVisaAPI:
             [
                 MockedRequest(
                     method=responses.POST,
-                    api_url=visa.PREFIX
-                    + "/forexrates/v2/foreignexchangerates",  # noqa: E501
-                    content_file=f"{RESPONSE_DIR}/visa_get_realtime_rate.json",
+                    api_url=urljoin(
+                        visa.PREFIX,
+                        f"forexrates/v2/foreignexchangerates?apiKey={MOCK_API_KEY}",  # noqa: 501
+                    ),
+                    content_file=filejoin(
+                        RESPONSE_DIR,
+                        "visa_get_realtime_rate.json",
+                    ),
                     status=HTTPStatus.OK,
                 ),
             ],

@@ -9,23 +9,22 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = os.getenv("PROJECT_NAME")
     SERVER_NAME: str = os.getenv("SERVER_NAME")
     SERVER_HOST: AnyHttpUrl = os.getenv("SERVER_HOST")
+    BASE_DIR: str = os.getenv("BASE_DIR")
+    STATIC_DIR: str = os.getenv("STATIC_DIR")
     API_PREFIX: str = os.getenv("API_PREFIX")
-    STATIC_FILE: str = os.getenv("STATIC_FILE")
 
     # Iso Crawler Coonfigs
     ISO_CRAWLER_STR: str = os.getenv("ISO_CRAWLER_STR")
+    ISO_CURRENCY_FILE: str = os.getenv("ISO_CURRENCY_FILE")
 
-    # Visa API Configs
+    # Visa API Configs (x-pay-token)
     VISA_API_STR: str = os.getenv("VISA_API_STR")
-    VISA_SSL_CERT: str = os.getenv("VISA_SSL_CERT")
-    VISA_SSL_KEY: str = os.getenv("VISA_SSL_KEY")
-    VISA_AUTH_USERNAME: str = os.getenv("VISA_AUTH_USERNAME")
-    VISA_AUTH_PASSWORD: str = os.getenv("VISA_AUTH_PASSWORD")
+    VISA_API_KEY: str = os.getenv("VISA_API_KEY")
+    VISA_SHARED_SECRET: str = os.getenv("VISA_SHARED_SECRET")
 
-    # MasterCard API Configs
+    # MasterCard API Configs (pkcs12 and dump private key)
     MASTERCARD_API_STR: str = os.getenv("MASTERCARD_API_STR")
-    MASTERCARD_OPENSSL_KEY: str = os.getenv("MASTERCARD_OPENSSL_KEY")
-    MASTERCARD_OPENSSL_PASSWORD: str = os.getenv("MASTERCARD_OPENSSL_PASSWORD")
+    MASTERCARD_PRIVATE_KEY: str = os.getenv("MASTERCARD_PRIVATE_KEY")
     MASTERCARD_CONSUMER_KEY: str = os.getenv("MASTERCARD_CONSUMER_KEY")
 
     # YahooFinance Crawler Configs

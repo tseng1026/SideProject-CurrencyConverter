@@ -1,6 +1,7 @@
 import pytest
 from app.dispatcher.v1.third_party import iso
 from app.schemas import Currency
+from app.utils import filejoin
 from tests.fixtures.mock import MockedFunction, MockedFunctionType
 
 ISO_API = "app.dispatcher.v1.third_party.iso"
@@ -24,7 +25,7 @@ class TestIsoApi:
                     mocked_type=MockedFunctionType.RETURN_VALUE,
                     function_name="urllib.request.urlopen",
                     return_value=open(
-                        f"{RESPONSE_DIR}/get_currencies.xml",
+                        filejoin(RESPONSE_DIR, "get_currencies.xml"),
                         "r",
                     ),
                 ),
@@ -61,7 +62,7 @@ class TestIsoApi:
                     mocked_type=MockedFunctionType.RETURN_VALUE,
                     function_name="builtins.open",
                     return_value=open(
-                        f"{RESPONSE_DIR}/get_currencies.xml",
+                        filejoin(RESPONSE_DIR, "get_currencies.xml"),
                         "r",
                     ),
                 ),
@@ -97,7 +98,7 @@ class TestIsoApi:
                     mocked_type=MockedFunctionType.RETURN_VALUE,
                     function_name="urllib.request.urlopen",
                     return_value=open(
-                        f"{RESPONSE_DIR}/get_currencies.xml",
+                        filejoin(RESPONSE_DIR, "get_currencies.xml"),
                         "r",
                     ),
                 ),
@@ -131,7 +132,7 @@ class TestIsoApi:
                     mocked_type=MockedFunctionType.RETURN_VALUE,
                     function_name="builtins.open",
                     return_value=open(
-                        f"{RESPONSE_DIR}/get_currencies.xml",
+                        filejoin(RESPONSE_DIR, "get_currencies.xml"),
                         "r",
                     ),
                 ),

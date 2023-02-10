@@ -3,6 +3,7 @@ from http import HTTPStatus
 import pytest
 from app.constants import settings
 from app.schemas import Currency
+from app.utils import urljoin
 from tests.fixtures.mock import MockedFunction, MockedFunctionType
 
 CURRENCY_DISPATCHER = "app.dispatcher.v1.third_party.iso"
@@ -15,7 +16,7 @@ class TestCurrencyAPI:
 
     @classmethod
     def setup_class(cls):
-        cls.endpoint = f"{settings.API_PREFIX}/v1/currency"
+        cls.endpoint = urljoin(settings.API_PREFIX, "v1/currency")
 
     @pytest.mark.usefixtures("mocked_function_returns")
     @pytest.mark.parametrize(
@@ -31,7 +32,7 @@ class TestCurrencyAPI:
         ],
     )
     def test_get_currencies(self, fastapi_client):
-        response = fastapi_client.get(f"{self.endpoint}/list")
+        response = fastapi_client.get(urljoin(self.endpoint, "list"))
 
         assert response.status_code == HTTPStatus.OK
         assert response.json() == [

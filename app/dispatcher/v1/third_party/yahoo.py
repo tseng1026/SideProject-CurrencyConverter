@@ -5,6 +5,7 @@ import requests
 from app.constants import StatColumns, StatInterval, StatPeriod, settings
 from app.dispatcher.v1.base import ExchangeRateDispatcher
 from app.schemas import Currency, HistoricExchangeRate, RealTimeExchangeRate
+from app.utils import urljoin
 from user_agent import generate_user_agent
 
 
@@ -37,7 +38,7 @@ class Yahoo(ExchangeRateDispatcher):
         interchange_rate: float = 0,
     ) -> RealTimeExchangeRate:
         res = requests.get(
-            self.PREFIX + f"/{from_currency.code}{to_currency.code}=X",
+            urljoin(self.PREFIX, f"{from_currency.code}{to_currency.code}=X"),
             headers={
                 "User-Agent": self.USER_AGENT,
             },
@@ -86,7 +87,7 @@ class Yahoo(ExchangeRateDispatcher):
         period: StatPeriod,
     ) -> HistoricExchangeRate:
         res = requests.get(
-            self.PREFIX + f"/{from_currency.code}{to_currency.code}=X",
+            urljoin(self.PREFIX, f"{from_currency.code}{to_currency.code}=X"),
             headers={
                 "User-Agent": self.USER_AGENT,
             },

@@ -1,16 +1,18 @@
+import os.path
 import urllib.request
-from os import path
 from typing import List
 
 from app.constants import settings
 from app.dispatcher.v1.base import CurrencyDispatcher
 from app.schemas import Currency
+from app.utils import filejoin, urljoin
 from bs4 import BeautifulSoup
 
 
 class Iso(CurrencyDispatcher):
     PREFIX = settings.ISO_CRAWLER_STR
-    STATIC_FILE = settings.STATIC_FILE
+    CURRENCY_FILE = settings.ISO_CURRENCY_FILE
+    STATIC_DIR = filejoin(settings.BASE_DIR, settings.STATIC_DIR)
 
     def get_currencies(self) -> List[Currency]:
         currencies = []
@@ -19,13 +21,13 @@ class Iso(CurrencyDispatcher):
         return currencies
 
     def get_currencies_from_url(self) -> List[Currency]:
-        url_str = self.PREFIX + "/list_one.xml"
+        url_str = urljoin(self.PREFIX, self.CURRENCY_FILE)
         xml_str = urllib.request.urlopen(url_str).read()
         return self.get_currencies_from_xml(xml_str)
 
     def get_currencies_from_static_files(self) -> List[Currency]:
-        file_str = self.STATIC_FILE + "/get_currencies.xml"
-        if not path.exists(file_str):
+        file_str = filejoin(self.STATIC_DIR, "get_currencies.xml")
+        if not os.path.exists(file_str):
             return []
 
         xml_str = open(file_str, "r").read()
@@ -61,13 +63,13 @@ class Iso(CurrencyDispatcher):
         return currency
 
     def get_currency_from_url(self, code: str) -> List[Currency]:
-        url_str = self.PREFIX + "/list_one.xml"
+        url_str = urljoin(self.PREFIX, self.CURRENCY_FILE)
         xml_str = urllib.request.urlopen(url_str).read()
         return self.get_currency_from_xml(code, xml_str)
 
     def get_currency_from_static_files(self, code: str) -> List[Currency]:
-        file_str = self.STATIC_FILE + "get_currencies.xml"
-        if not path.exists(file_str):
+        file_str = filejoin(self.STATIC_DIR, "get_currencies.xml")
+        if not os.path.exists(file_str):
             return []
 
         xml_str = open(file_str, "r").read()

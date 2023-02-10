@@ -4,15 +4,14 @@ import requests
 from app.constants import settings
 from app.dispatcher.v1.base import ExchangeRateDispatcher
 from app.schemas import Currency, RealTimeExchangeRate
+from app.utils import XPayToken, urljoin
 
 
 class Visa(ExchangeRateDispatcher):
     PREFIX = settings.VISA_API_STR
 
-    SSL_CERT = settings.VISA_SSL_CERT
-    SSL_KEY = settings.VISA_SSL_KEY
-    AUTH_USERNAME = settings.VISA_AUTH_USERNAME
-    AUTH_PASSWORD = settings.VISA_AUTH_PASSWORD
+    API_KEY = settings.VISA_API_KEY
+    SHARED_SECRET = settings.VISA_SHARED_SECRET
 
     def get_realtime_rate(
         self,
@@ -26,15 +25,15 @@ class Visa(ExchangeRateDispatcher):
             raise Exception("Historic data unsupported.")
 
         res = requests.post(
-            self.PREFIX + "/forexrates/v2/foreignexchangerates",
+            urljoin(self.PREFIX, "forexrates/v2/foreignexchangerates"),
+            params={"apiKey": self.API_KEY},
             json={
                 "rateProductCode": "A",
                 "sourceAmount": amount,
                 "sourceCurrencyCode": from_currency.number,
                 "destinationCurrencyCode": to_currency.number,
             },
-            cert=(self.SSL_CERT, self.SSL_KEY),
-            auth=(self.AUTH_USERNAME, self.AUTH_PASSWORD),
+            auth=XPayToken(self.SHARED_SECRET),
         )
 
         res_json = res.json()

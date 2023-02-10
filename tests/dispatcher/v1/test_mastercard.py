@@ -4,6 +4,7 @@ import pytest
 import responses
 from app.dispatcher.v1.third_party import mastercard
 from app.schemas import Currency, RealTimeExchangeRate
+from app.utils import filejoin, urljoin
 from freezegun import freeze_time
 from tests.fixtures.requests import MockedRequest
 
@@ -24,9 +25,14 @@ class TestMastercardAPI:
             [
                 MockedRequest(
                     method=responses.GET,
-                    api_url=mastercard.PREFIX
-                    + "/settlement/currencyrate/conversion-rate",
-                    content_file=f"{RESPONSE_DIR}/mastercard_get_realtime_rate.json",  # noqa: E501
+                    api_url=urljoin(
+                        mastercard.PREFIX,
+                        "settlement/currencyrate/conversion-rate",
+                    ),
+                    content_file=filejoin(
+                        RESPONSE_DIR,
+                        "mastercard_get_realtime_rate.json",
+                    ),
                     status=HTTPStatus.OK,
                 ),
             ],

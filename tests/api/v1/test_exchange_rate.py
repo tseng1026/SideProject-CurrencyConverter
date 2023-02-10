@@ -3,6 +3,7 @@ from http import HTTPStatus
 import pytest
 from app.constants import StatInterval, StatPeriod, settings
 from app.schemas import Currency, HistoricExchangeRate, RealTimeExchangeRate
+from app.utils import urljoin
 from tests.fixtures.mock import MockedFunction, MockedFunctionType
 
 CURRENCY_DISPATCHER = "app.dispatcher.v1.third_party.iso"
@@ -32,7 +33,7 @@ class TestExchangeRateAPI:
 
     @classmethod
     def setup_class(cls):
-        cls.endpoint = f"{settings.API_PREFIX}/v1/exchange-rate"
+        cls.endpoint = urljoin(settings.API_PREFIX, "v1/exchange-rate")
 
     @pytest.mark.usefixtures("mocked_function_returns")
     @pytest.mark.parametrize(
@@ -60,7 +61,7 @@ class TestExchangeRateAPI:
             "interchange_rate": 0.0,
         }
         response = fastapi_client.get(
-            f"{self.endpoint}/real-time/mid-market",
+            urljoin(self.endpoint, "real-time", "mid-market"),
             params=query,
         )
 
@@ -116,7 +117,7 @@ class TestExchangeRateAPI:
             "period": "1d",
         }
         response = fastapi_client.get(
-            f"{self.endpoint}/historic",
+            urljoin(self.endpoint, "historic"),
             params=query,
         )
 
