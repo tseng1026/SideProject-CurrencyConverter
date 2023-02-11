@@ -1,3 +1,4 @@
+import os
 from enum import Enum
 
 from pydantic import AnyHttpUrl, BaseSettings
@@ -37,6 +38,14 @@ class Settings(BaseSettings):
 
     class Config:
         env_file = ".env"
+
+        if os.environ.get("ENVIRONMENT", "") == DeploymenyEnvironment.PROD:
+            env_file = ".env.prod"
+        elif os.environ.get("ENVIRONMENT", "") == DeploymenyEnvironment.DEV:
+            env_file = ".env.dev"
+
+        if not os.path.exists(os.getcwd() + "/" + env_file):
+            env_file = ".env"
 
 
 settings = Settings()
