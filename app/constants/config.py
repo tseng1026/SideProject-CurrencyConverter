@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = os.getenv("PROJECT_NAME")
     SERVER_NAME: str = os.getenv("SERVER_NAME")
     SERVER_HOST: AnyHttpUrl = os.getenv("SERVER_HOST")
+    SERVER_PORT: int = os.getenv("SERVER_PORT")
     BASE_DIR: str = os.getenv("BASE_DIR")
     STATIC_DIR: str = os.getenv("STATIC_DIR")
     API_PREFIX: str = os.getenv("API_PREFIX")
