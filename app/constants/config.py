@@ -1,36 +1,35 @@
-import os
-
-from dotenv import load_dotenv
 from pydantic import AnyHttpUrl, BaseSettings
 
 
 class Settings(BaseSettings):
     # Environment Variables
-    PROJECT_NAME: str = os.getenv("PROJECT_NAME")
-    SERVER_NAME: str = os.getenv("SERVER_NAME")
-    SERVER_HOST: AnyHttpUrl = os.getenv("SERVER_HOST")
-    SERVER_PORT: int = os.getenv("SERVER_PORT")
-    BASE_DIR: str = os.getenv("BASE_DIR")
-    STATIC_DIR: str = os.getenv("STATIC_DIR")
-    API_PREFIX: str = os.getenv("API_PREFIX")
+    PROJECT_NAME: str = "Currency Converter"
+    SERVER_NAME: str = "currency_converter"
+    SERVER_HOST: AnyHttpUrl
+    SERVER_PORT: int
+    BASE_DIR: str
+    STATIC_DIR: str
+    API_PREFIX: str
 
     # Iso Crawler Coonfigs
-    ISO_CRAWLER_STR: str = os.getenv("ISO_CRAWLER_STR")
-    ISO_CURRENCY_FILE: str = os.getenv("ISO_CURRENCY_FILE")
+    ISO_CRAWLER_STR: str
+    ISO_CURRENCY_FILE: str
 
     # Visa API Configs (x-pay-token)
-    VISA_API_STR: str = os.getenv("VISA_API_STR")
-    VISA_API_KEY: str = os.getenv("VISA_API_KEY")
-    VISA_SHARED_SECRET: str = os.getenv("VISA_SHARED_SECRET")
+    VISA_API_STR: str
+    VISA_API_KEY: str
+    VISA_SHARED_SECRET: str
 
     # MasterCard API Configs (pkcs12 and dump private key)
-    MASTERCARD_API_STR: str = os.getenv("MASTERCARD_API_STR")
-    MASTERCARD_PRIVATE_KEY: str = os.getenv("MASTERCARD_PRIVATE_KEY")
-    MASTERCARD_CONSUMER_KEY: str = os.getenv("MASTERCARD_CONSUMER_KEY")
+    MASTERCARD_API_STR: str
+    MASTERCARD_PRIVATE_KEY: str
+    MASTERCARD_CONSUMER_KEY: str
 
     # YahooFinance Crawler Configs
-    YAHOO_CRAWLER_STR: str = os.getenv("YAHOO_CRAWLER_STR")
+    YAHOO_CRAWLER_STR: str
+
+    class Config:
+        env_file = ".env"
 
 
-load_dotenv()
 settings = Settings()
