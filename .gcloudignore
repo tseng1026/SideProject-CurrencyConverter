@@ -1,7 +1,12 @@
+.gcloudignore
+.git
+.gitignore
+
 # Environment
-env.yaml
 .env
 .DS_Store
+Pipfile
+Pipfile.lock
 
 # Cache
 *.pyc
@@ -14,3 +19,6 @@ __pycache__/
 *.p12
 *.pem
 *.key
+
+# Ignored by the build system
+/setup.cfg

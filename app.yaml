@@ -1,0 +1,8 @@
+runtime: python39
+entrypoint: gunicorn -w=2 -k=uvicorn.workers.UvicornWorker --bind=0.0.0.0:8080 main:app
+
+env_variables:
+  ENVIRONMENT: production
+
+includes:
+  - env.yaml
